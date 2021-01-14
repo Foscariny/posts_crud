@@ -1,0 +1,28 @@
+<p id="notice"><%= notice %></p>
+
+<h1>List all the Posts!</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Rating</th>
+        <tr>
+    </thead>
+
+    <tbody>
+<% @posts.each do |post|%>
+        <tr>
+            <td><%= post.title %></td>
+            <td><%= post.description %></td>
+            <td><%= post.rating %></td>
+            <td><%= link_to 'Show', post %></td>
+            <td><%= link_to 'Edit', post_edit_url(post.id) %></td>
+            <td><%= link_to 'Delete', post, method: :delete %></td>
+        <tr>
+<% end %>
+    </tbody>
+</table>
+
+<%= link_to 'New Post', posts_new_path %>

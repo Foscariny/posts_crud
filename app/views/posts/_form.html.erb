@@ -1,0 +1,21 @@
+<%= form_with(model: post, local: true) do |form| %>
+
+  <div class="field">
+    <%= form.label "Title (Only letters or numbers)" %>
+    <%= form.text_field :title, id: :post_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :post_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :rating %>
+    <%= form.number_field :rating, id: :post_rating %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
