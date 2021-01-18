@@ -1,0 +1,35 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <%= link_to 'Posts', posts_path, class: "navbar-brand"%>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse " id="navbarNav">
+    <ul class="navbar-nav mr-auto">
+    <% if logged_in? %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_username %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'See your account', user_url(session[:user_id]), class: "dropdown-item"%>
+          <%= link_to 'Logout', logout_path, method: :destroy , class: "dropdown-item"%>
+        </div>
+      </li>
+    <% else %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Account
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Sign In', login_url, class: "dropdown-item"%>
+          <%= link_to 'Sing up', new_user_url, class: "dropdown-item"%>
+        </div>
+      </li>
+    <% end %> 
+    </ul>
+    <%= form_tag(posts_search_url, method: :get, class: "form-inline my-2 my-lg-0") do %>
+      <%= search_field_tag :search, params[:search], placeholder: "Search", class: "form-control mr-sm-2" %>
+      <%= button_tag "Search", :class => "btn btn-outline-success my-2 my-sm-0", :name => nil  %>
+    <% end %>
+  </div>
+</nav>

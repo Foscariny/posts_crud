@@ -1,28 +1,56 @@
 <p id="notice"><%= notice %></p>
 
-<h1>List all the Posts!</h1>
+<div class="mb-2 w-100">
+<h1><% if logged_in? %>
+      Hi, <%= current_user.username %>!
+    <% else %>
+      Hi, anonimous!
+    <% end %>
+     here is a list of the Posts!
+</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Rating</th>
-        <tr>
-    </thead>
 
-    <tbody>
+    
+    <div class="dropdown float-l">
+        <button class="btn btn-dark dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Filters
+        </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <% if request.original_url.include? 'good' or request.original_url.include? 'bad' or request.original_url.include? 'your-ratings' %>
+                    <%= link_to 'Remove filter', posts_path, class: 'dropdown-item'%>
+                    <div class="dropdown-divider"></div>
+                <% end %>
+                <%= link_to 'Bad ratings', posts_filter_url('bad'), class: 'dropdown-item' %>
+                <%= link_to 'Good ratings', posts_filter_url('good'), class: 'dropdown-item' %>
+                <%= link_to 'Your ratings', posts_filter_url('my-ratings'), class: 'dropdown-item' if logged_in? %>
+            </div>
+        </div>
+    <%= link_to 'New Post', posts_new_path, class: "btn btn-dark ml-3 mr-2" if logged_in? %>
+    <%= link_to 'Clean search', posts_path, class: "btn btn-dark" if !@search_term.blank? %>
+    </div>
+
+    
+
+    
+<div class="w-100">
 <% @posts.each do |post|%>
-        <tr>
-            <td><%= post.title %></td>
-            <td><%= post.description %></td>
-            <td><%= post.rating %></td>
-            <td><%= link_to 'Show', post %></td>
-            <td><%= link_to 'Edit', post_edit_url(post.id) %></td>
-            <td><%= link_to 'Delete', post, method: :delete %></td>
-        <tr>
-<% end %>
-    </tbody>
-</table>
 
-<%= link_to 'New Post', posts_new_path %>
+        <div class="card mb-3">
+            <div class="card-body">
+            <p class="card-subtitle text-muted pos-abs">Author: <%= @author = User.find_by_id(post.user_id).username %></p>
+                <h4 class="card-title"><%= post.title %></h4>
+                <h5 class="card-subtitle mb-2 text-muted" ><%= post.rating %> stars</h5>
+                <p class="card-text"><%= post.description %></p>
+                
+                <%= link_to 'Show', post %>
+                <%= link_to 'Edit', post_edit_url(post.id) if admin? || @author == current_username %>
+                <%= link_to 'Delete', post, method: :delete if admin? || @author == current_username %>
+            </div>
+        </div>
+<% end %>
+</div>
+    
+
+    
+ 
+

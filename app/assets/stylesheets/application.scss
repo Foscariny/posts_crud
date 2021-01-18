@@ -1,0 +1,63 @@
+@import "bootstrap";
+
+  /* Links inside the navbar */
+  .navbar a {
+    text-align: center;
+    text-decoration: none;
+  }
+  
+  /* The dropdown container */
+  .drop {
+    overflow: hidden;
+    float: left;
+    margin-right: 20px;
+  }
+
+  .float-l{
+    float: left;
+  }
+  
+  /* Dropdown button */
+  .drop .dropbtn {
+  }
+  
+  /* Add a red background color to navbar links on hover */
+  .navbar a:hover, .drop:hover .dropbtn {
+    background-color: rgb(31, 31, 31);
+  }
+  
+  /* Dropdown content (hidden by default) */
+  .dropdown-things {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+
+  }
+  
+  .w-100{
+    width: 100%;
+    float: left;
+  }
+
+  .pos-abs{
+    position: absolute;
+    right: 15px;
+  }
+  /* Links inside the dropdown */
+  .dropdown-things a {
+    padding: 5px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  /* Add a grey background color to dropdown links on hover */
+  .dropdown-things a:hover {
+    background-color: #ddd;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .drop:hover .dropdown-things {
+    display: block;
+    float: left;
+  }

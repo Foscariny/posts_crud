@@ -5,10 +5,42 @@ class PostsController < ApplicationController
 
   # GET /posts
   def index
-    @posts = Post.all()
+    @posts = Post.all().order("rating")
+    
     respond_to do |format|
     format.html { render :index}
     format.json { render json: @posts}
+    end
+  end
+
+  def search
+    @search_term = params[:search]
+    @posts = Post.where("title LIKE lower(?)", "%#{@search_term}%")
+    render :index
+  end
+
+  def filter
+    respond_to do |format|
+
+      if params[:filter].blank?
+        redirect_to posts_path
+      elsif params[:filter] == 'good'
+        @posts = Post.good.order("rating")
+        format.html { render :index}
+        format.json { render json: @posts}
+      elsif params[:filter] == 'bad'
+        @posts = Post.bad.order("rating")
+        format.html { render :index}
+        format.json { render json: @posts}
+      elsif params[:filter] == 'my-ratings'
+        @posts = Post.your_ratings(current_user.id).order("rating")
+        format.html { render :index}
+        format.json { render json: @posts}
+      else
+        @posts = Post.all().order("rating")
+        format.html { redirect_to posts_path}
+        format.json { render json: @posts}
+      end
     end
   end
 
@@ -21,8 +53,7 @@ class PostsController < ApplicationController
     end
   
   def create
-    @post = Post.new(post_params)
-      
+    @post = current_user.posts.build(post_params)
     respond_to do |format|
       
       if @post.title.blank? || @post.description.blank? || !@post.title.match(ONLY_LETTERS_REGEX)
@@ -69,7 +100,7 @@ class PostsController < ApplicationController
   private
 
   def post_params
-  params.require(:post).permit(:title, :description, :rating)
+  params.require(:post).permit(:title, :description, :rating, :user_id)
   end
 
   def set_post
