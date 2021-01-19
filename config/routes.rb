@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   # Rotas dos Usuários
   resources :users, only: [:new, :create, :edit, :update, :show, :destroy]
-
+  get "users/:id/send-email", to: "users#email", as: "email"
   # Rotas das sessions
   get '/login', to: 'sessions#login'
   post '/login', to: 'sessions#create'

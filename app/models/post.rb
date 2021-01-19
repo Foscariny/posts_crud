@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-
+    is_impressionable
     belongs_to :user
     
     scope :bad, ->{ where('rating <= ?', 3) }

@@ -7,11 +7,16 @@
     </p>
 
     <p>
+    <strong>Email:</strong>
+    <%= @user.email %>
+    </p>
+
+    <p>
     Hi, <%= @user.username %>! I'm here to help you :)
     </p>
 
 
-    <%= link_to 'Back', posts_path %>
+    <%= link_to 'Back', posts_path %> | <%= link_to 'Send test email', email_url %>
  
 </div>
 

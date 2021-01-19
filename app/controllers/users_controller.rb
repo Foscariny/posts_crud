@@ -17,10 +17,15 @@ class UsersController < ApplicationController
     @user = User.find(session[:user_id])
   end
 
+  def email
+    UserMailer.welcome_email(current_user).deliver_now
+    redirect_to root_path, notice: 'An email has been sent!'
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:username, :password, :password_confirmation)
+    params.require(:user).permit(:username, :password, :password_confirmation, :email)
   end
   
 end

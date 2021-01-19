@@ -32,19 +32,22 @@
     
 
     
-<div class="w-100">
+<div class="row">
 <% @posts.each do |post|%>
-
-        <div class="card mb-3">
-            <div class="card-body">
-            <p class="card-subtitle text-muted pos-abs">Author: <%= @author = User.find_by_id(post.user_id).username %></p>
-                <h4 class="card-title"><%= post.title %></h4>
-                <h5 class="card-subtitle mb-2 text-muted" ><%= post.rating %> stars</h5>
-                <p class="card-text"><%= post.description %></p>
-                
-                <%= link_to 'Show', post %>
-                <%= link_to 'Edit', post_edit_url(post.id) if admin? || @author == current_username %>
-                <%= link_to 'Delete', post, method: :delete if admin? || @author == current_username %>
+        <div class="col-6">
+            <div class="card mb-4 ml-1 mr-1">
+                <div class="card-body">
+                <p class="card-subtitle text-muted pos-abs">Author: <%= @author = User.find_by_id(post.user_id).username %></p>
+                <p class="card-subtitle text-muted pos-abs2"> viewed <%= post.impressionist_count %> times</p>
+                    <h4 class="card-title"><%= post.title %></h4>
+                    <h5 class="card-subtitle mb-2 text-muted" ><%= post.rating %> stars</h5>
+                    <p class="card-text"><%= post.description %></p>
+                    
+                    
+                    <%= link_to 'Show', post %>
+                    <%= link_to 'Edit', post_edit_url(post.id) if admin? || @author == current_username %>
+                    <%= link_to 'Delete', post, method: :delete if admin? || @author == current_username %>
+                </div>
             </div>
         </div>
 <% end %>

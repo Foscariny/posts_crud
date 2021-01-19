@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
-
+  
   before_action :set_post, only: [:show, :update, :destroy, :edit]
+  impressionist :actions=>[:index, :show]
   ONLY_LETTERS_REGEX = /^[\w\s.-]+$/i
 
   # GET /posts
@@ -47,6 +48,7 @@ class PostsController < ApplicationController
   # GET /posts/:id
   def show
     respond_to do |format|
+      impressionist(@post)
       format.html { render :show}
       format.json { render json: @post}
       end
